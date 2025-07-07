@@ -641,6 +641,18 @@ function AddEditQuotationModal({ onClose, isEdit, initialData, leads, quotations
     onClose();
   };
 
+
+
+  const TAX_RATES = [0, 5, 12, 18, 28];
+  const CURRENCY_SYMBOLS = {
+    INR: '₹',
+    USD: '$',
+    EUR: '€',
+    GBP: '£'
+  };
+
+
+  
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
       <div className="bg-gray-800 rounded-xl shadow-2xl p-8 w-full max-w-6xl max-h-[90vh] flex flex-col">
@@ -687,17 +699,78 @@ function AddEditQuotationModal({ onClose, isEdit, initialData, leads, quotations
           {/* Totals & Taxes */}
           <div className="flex justify-between mt-6">
             <div className="grid grid-cols-4 gap-4">
-              <SettingsInputField label="Currency" as="select" name="currency" value={formData.currency} onChange={handleFormChange}>
-                {Object.keys(CURRENCIES).map(c => <option key={c} value={c}>{c}</option>)}
+              
+
+              <SettingsInputField
+                label="Currency"
+                as="select"
+                name="currency"
+                value={formData.currency}
+                onChange={handleFormChange}
+              >
+                {Object.keys(CURRENCIES).map(c => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
               </SettingsInputField>
-              <SettingsInputField label="CGST (%)" name="cgstRate" type="number" value={formData.cgstRate} onChange={handleFormChange} />
-              <SettingsInputField label="SGST (%)" name="sgstRate" type="number" value={formData.sgstRate} onChange={handleFormChange} />
-              <SettingsInputField label="IGST (%)" name="igstRate" type="number" value={formData.igstRate} onChange={handleFormChange} />
+
+              <SettingsInputField
+                label="CGST (%)"
+                as="select"
+                name="cgstRate"
+                value={formData.cgstRate}
+                onChange={handleFormChange}
+              >
+                {TAX_RATES.map(rate => (
+                  <option key={rate} value={rate}>{rate}%</option>
+                ))}
+              </SettingsInputField>
+
+              <SettingsInputField
+                label="SGST (%)"
+                as="select"
+                name="sgstRate"
+                value={formData.sgstRate}
+                onChange={handleFormChange}
+              >
+                {TAX_RATES.map(rate => (
+                  <option key={rate} value={rate}>{rate}%</option>
+                ))}
+              </SettingsInputField>
+
+              <SettingsInputField
+                label="IGST (%)"
+                as="select"
+                name="igstRate"
+                value={formData.igstRate}
+                onChange={handleFormChange}
+              >
+                {TAX_RATES.map(rate => (
+                  <option key={rate} value={rate}>{rate}%</option>
+                ))}
+              </SettingsInputField>
+
             </div>
             <div className="w-full max-w-xs space-y-2 text-white">
-              <div className="flex justify-between"><span className="text-gray-400">Subtotal:</span> <span className="font-mono">${totals.subtotal.toFixed(2)}</span></div>
-              <div className="flex justify-between"><span className="text-gray-400">Total Tax:</span> <span className="font-mono">${totals.totalTax.toFixed(2)}</span></div>
-              <div className="flex justify-between text-xl font-bold border-t border-gray-600 pt-2"><span >Grand Total:</span> <span className="font-mono">${totals.total.toFixed(2)}</span></div>
+              <div className="flex justify-between">
+                <span className="text-gray-400">Subtotal:</span>
+                <span className="font-mono">
+                  {CURRENCY_SYMBOLS[formData.currency] || ''}{totals.subtotal.toFixed(2)}
+                </span>
+              </div>
+
+              <div className="flex justify-between">
+                <span className="text-gray-400">Total Tax:</span>
+                <span className="font-mono">
+                  {CURRENCY_SYMBOLS[formData.currency] || ''}{totals.totalTax.toFixed(2)}
+                </span>
+              </div>
+
+              <div className="flex justify-between text-xl font-bold border-t border-gray-600 pt-2">
+                <span>Grand Total:</span>
+                <span className="font-mono">
+                  {CURRENCY_SYMBOLS[formData.currency] || ''}{totals.total.toFixed(2)}
+                </span>
+              </div>
             </div>
           </div>
         </form>
