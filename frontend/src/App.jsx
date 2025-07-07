@@ -644,12 +644,7 @@ function AddEditQuotationModal({ onClose, isEdit, initialData, leads, quotations
 
 
   const TAX_RATES = [0, 5, 12, 18, 28];
-  const CURRENCY_SYMBOLS = {
-    INR: '₹',
-    USD: '$',
-    EUR: '€',
-    GBP: '£'
-  };
+  
 
 
   
@@ -754,21 +749,21 @@ function AddEditQuotationModal({ onClose, isEdit, initialData, leads, quotations
               <div className="flex justify-between">
                 <span className="text-gray-400">Subtotal:</span>
                 <span className="font-mono">
-                  {CURRENCY_SYMBOLS[formData.currency] || ''}{totals.subtotal.toFixed(2)}
+                  {CURRENCIES[formData.currency] || ''}{totals.subtotal.toFixed(2)}
                 </span>
               </div>
 
               <div className="flex justify-between">
                 <span className="text-gray-400">Total Tax:</span>
                 <span className="font-mono">
-                  {CURRENCY_SYMBOLS[formData.currency] || ''}{totals.totalTax.toFixed(2)}
+                  {CURRENCIES[formData.currency] || ''}{totals.totalTax.toFixed(2)}
                 </span>
               </div>
 
               <div className="flex justify-between text-xl font-bold border-t border-gray-600 pt-2">
                 <span>Grand Total:</span>
                 <span className="font-mono">
-                  {CURRENCY_SYMBOLS[formData.currency] || ''}{totals.total.toFixed(2)}
+                  {CURRENCIES[formData.currency] || ''}{totals.total.toFixed(2)}
                 </span>
               </div>
             </div>
